@@ -1,0 +1,191 @@
+%%%Packages
+\RequirePackage{etoolbox}
+\RequirePackage{tikz}
+\RequirePackage{ifthen}
+\RequirePackage{answers}
+\RequirePackage{amsmath,amssymb,amsfonts, amsthm}
+\RequirePackage{thmtools}
+\RequirePackage{mdframed} 
+%\RequirePackage{sansmathfonts}
+%\RequirePackage[T1]{fontenc}
+\RequirePackage[headheight = 14pt,margin=1in]{geometry}
+\RequirePackage[spanish]{babel}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+\RequirePackage{fancyhdr}
+\RequirePackage{enumitem}
+\RequirePackage{epigraph}
+\RequirePackage[normalem]{ulem}
+
+\renewcommand{\epigraphsize}{\scriptsize}
+\renewcommand{\epigraphwidth}{60ex}
+
+
+
+
+
+%%%fancyhdr
+%\pagestyle{fancy}
+%\lfoot{\sffamily\bfseries\hyperlink{tabla}{Índice}}
+%\rfoot{\thepage}
+%\cfoot{}
+%\lhead{\color{jampmDate}{\sffamily\today}}
+%\rhead{\rmfamily{Proyecto MURO}}
+%%name of the handout, create variable with that string package on the macros page in wikibook
+%\chead{{\sffamily\large \title}}
+
+
+%%Colors
+%See: https://web.archive.org/web/20160319223638/https://web.stanford.edu/class/cs101/image-rgb-explorer.html
+
+\definecolor{jampmDate}{RGB}{255, 141, 131}
+\definecolor{jampmTitle}{RGB}{50, 210, 255}
+\definecolor{jampmLinks}{RGB}{76, 170, 255}
+\definecolor{jampmProblem}{RGB}{197, 36, 84}
+\definecolor{jampmNiceLine1}{RGB}{154, 59, 68}
+\definecolor{jampmOutline}{RGB}{61, 210, 192}
+\definecolor{jampmClaimBack}{RGB}{34, 139, 34}
+\definecolor{jampmStatementFrame}{RGB}{195, 112, 159}
+\definecolor{jampmClaimFrame}{RGB}{180, 250, 162}
+\definecolor{jampmBullets}{RGB}{255, 150, 150}
+\definecolor{NormalP}{RGB}{76, 170, 255}
+%\definecolor{NormalP}{RGB}{0,188,227}
+\definecolor{ReqP}{RGB}{197, 36, 84}
+%\definecolor{ReqP}{RGB}{237, 34, 34}
+\definecolor{sec}{RGB}{128, 0, 20}
+
+
+%%HyperSETUP
+%\hypersetup{
+%colorlinks= true,
+%urlcolor= cyan,
+%linkcolor= jampmLinks,
+%citecolor=red,
+%pdftitle={Proyecto MURO},
+%bookmarks = true,
+%pdfpagemode = FullScreen,
+%}
+
+
+
+
+
+
+%%%%%%%% Hints:
+% Setup counters
+\newcounter{hindex}\setcounter{hindex}{0}
+\newcounter{hintcounter}\setcounter{hintcounter}{0}
+
+% Define \addhint and \gethint
+\newcommand\addhint[1]{%
+	\stepcounter{hintcounter}%
+	\ref{hint:\thehintcounter}%
+	\expandafter\gdef\csname hintlist\thehintcounter\endcsname{#1}%
+}
+\newcommand\gethint[1]{%
+	\item \csname hintlist#1\endcsname \label{hint:#1}
+}
+\newenvironment{hint}{ \footnotesize \normalfont \textbf{Pistas}:}{\hspace{-0.5ex}}
+\pgfmathsetseed{65536} % or any other number: sets the random seed
+
+%% print pistas
+%\newcommand{\printpistas}{%
+%
+    %\makeatletter
+    %\def\declarenumlist#1#2#3{%
+    %\expandafter\edef\csname pgfmath@randomlist@#1\endcsname{#3}%
+    %\count@\@ne
+    %\loop
+    %\expandafter\edef
+    %\csname pgfmath@randomlist@#1@\the\count@\endcsname
+      %{\the\count@}
+    %\ifnum\count@<#3\relax
+    %\advance\count@\@ne
+    %\repeat}
+    %
+    %\declarenumlist{hintlist}{1}{\value{hintcounter}}
+    %
+    %\def\prunelist#1{%
+    %\expandafter\edef\csname pgfmath@randomlist@#1\endcsname
+        %{\the\numexpr\csname pgfmath@randomlist@#1\endcsname-1\relax}
+    %\count@\pgfmath@randomtemp
+    %\loop
+    %\expandafter\let
+    %\csname pgfmath@randomlist@#1@\the\count@\expandafter\endcsname
+    %\csname pgfmath@randomlist@#1@\the\numexpr\count@+1\relax\endcsname
+    %\ifnum\count@<\csname pgfmath@randomlist@#1\endcsname\relax
+    %\advance\count@\@ne
+    %\repeat}
+    %\makeatother
+    
+    %% Print the hints
+    %\begin{enumerate}
+    %\small
+    %\itemsep2pt
+    %\setcounter{hindex}{0}%
+    %\whiledo{\value{hindex} < \value{hintcounter}}{%
+     %\addtocounter{hindex}{1}%
+     %\pgfmathrandomitem\z{hintlist}
+     %\gethint{\z}
+     %\prunelist{hintlist}
+    %}
+    %\end{enumerate}
+%}
+
+
+%% MY COMMANDS
+\renewcommand{\thesection}{\Roman{section}}
+
+\let\LaTeXtitle\title
+\renewcommand{\title}[1]{\LaTeXtitle{\color{jampmTitle}{\sffamily\bfseries\Huge#1}}}
+\let\LaTeXdate\date
+\renewcommand{\date}[1]{\LaTeXdate{\color{jampmDate}{\sffamily #1}}}
+\renewcommand\qedsymbol{$\blacksquare$}
+\newcommand{\grados}{^\circ}
+
+\newcommand{\enunciado}[3]{\input{concursos/#2/enunciados/#1/#3.tex}}
+
+%% Evan's Commands
+\newcommand{\clubs}[1]{$#1\clubsuit$}
+\newcommand{\dg}{\grados}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\seg}[1]{\overline{\mathrm {#1}}}
+\newcommand{\olra}[1]{\overleftrightarrow{\mathrm {#1}}}
+\newcommand{\ray}[1]{\overrightarrow{\mathrm {#1}}}
+\newcommand{\arc}[1]{\widehat{\mathrm {#1}}}
+\newcommand{\dang}{\measuredangle}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\ii}{\item}
+
+\newcommand{\eps}{\epsilon}
+
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\ZZ}{\mathbb Z}
+
+\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
+\newcommand{\symsum}{\sum_{\mathrm{sym}}}
+\newcommand{\dsum}{\displaystyle\sum}
+\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
+\newcommand{\symprod}{\prod_{\mathrm{sym}}}
+\newcommand{\dprod}{\displaystyle\prod}
+
+\newcommand{\SA}{\mathcal A}
+\newcommand{\SC}{\mathcal C}
+\newcommand{\SD}{\mathcal D}
+\newcommand{\SF}{\mathcal F}
+\newcommand{\SG}{\mathcal G}
+\newcommand{\SP}{\mathcal P}
+\newcommand{\SQ}{\mathcal Q}
+\renewcommand{\SS}{\mathcal S}
+
+\DeclareMathOperator*{\lcm}{lcm}
